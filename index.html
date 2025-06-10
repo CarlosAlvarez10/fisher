@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>🎉 Feliz Cumpleaños Madrina 🎂</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+</head>
+<body>
+
+  <!-- Globos flotantes -->
+  <div class="balloons">
+    <div class="balloon red"></div>
+    <div class="balloon blue"></div>
+    <div class="balloon yellow"></div>
+    <div class="balloon green"></div>
+    <div class="balloon pink"></div>
+    <div class="balloon orange"></div>
+    <div class="balloon cyan"></div>
+    <div class="balloon violet"></div>
+    <div class="balloon lime"></div>
+    <div class="balloon gold"></div>
+    <div class="balloon hotpink"></div>
+    <div class="balloon teal"></div>
+    <div class="balloon coral"></div>
+    <div class="balloon silver"></div>
+    <div class="balloon magenta"></div>
+  </div>
+
+  <!-- Fuegos artificiales y confeti -->
+  <div class="fireworks" id="fireworksContainer"></div>
+  <div id="confettiContainer"></div>
+
+  <!-- Contenido central -->
+  <div class="container">
+
+    <!-- Pastel -->
+    <svg id="cake" viewBox="0 0 200 200" width="200px" height="200px">
+      <rect x="30" y="100" width="140" height="70" rx="20" fill="#fefae9"/>
+      <rect x="50" y="80" width="100" height="20" rx="10" fill="#f78da7"/>
+      <circle cx="100" cy="70" r="5" fill="orange">
+        <animate attributeName="r" values="5;8;5" dur="1s" repeatCount="indefinite" />
+      </circle>
+      <rect x="98" y="40" width="4" height="30" fill="#fff"/>
+    </svg>
+
+    <!-- Título y botón -->
+    <h1>🎂 ¡Feliz Cumpleaños Madrina! 🎉</h1>
+    <button id="mostrarMensaje">Ver Mensaje Especial</button>
+
+    <!-- Mensaje oculto -->
+    <div id="mensajeCumple">
+      <p>🙏 Que Dios me la bendiga con fuerzas renovadas, mucha salud y alegría en cada paso.</p>
+      <p>🎊 Hoy celebramos su vida con amor, recordando con cariño esos momentos únicos que siempre llevaremos en el corazón. 💭</p>
+      <p>🎵 Escuche esta canción… de esas que le gustaban tanto al viejo 🎶</p>
+      <p>🕊️ Porque él también está presente, en la música, en el recuerdo, y en cada abrazo que le damos hoy. 🤍</p>
+      <p>🫂 Aquí estamos, como siempre, para usted 💕</p>
+      <p>💌 Con Mucho Cariño 💌</p>
+    </div>
+  </div>
+
+  <!-- Audio oculto -->
+  <audio id="musicaFondo" loop>
+    <source src="remember.mp3" type="audio/mpeg">
+    Tu navegador no soporta audio HTML5.
+  </audio>
+
+  <!-- Scripts -->
+  <script>
+    const musica = document.getElementById('musicaFondo');
+    let musicaReproducida = false;
+    let clicsBoton = 0;
+
+    // Reproducir música al primer clic en cualquier parte
+    document.body.addEventListener('click', () => {
+      if (!musicaReproducida) {
+        musica.play();
+        musicaReproducida = true;
+      }
+    });
+
+    // Requiere 2 clics para mostrar el mensaje
+    document.getElementById('mostrarMensaje').addEventListener('click', function () {
+      clicsBoton++;
+      if (clicsBoton === 1) {
+        this.textContent = '¡Presiona otra vez!';
+      } else if (clicsBoton === 2) {
+        document.getElementById('mensajeCumple').style.display = 'block';
+        this.style.display = 'none';
+
+        // Confeti estallido (además del confeti flotante)
+        for (let i = 0; i < 5; i++) {
+          setTimeout(() => {
+            confetti({
+              particleCount: 100,
+              spread: 70,
+              origin: { y: Math.random() * 0.8 }
+            });
+          }, i * 500);
+        }
+      }
+    });
+
+    // Crear fuegos artificiales estilo globos
+    function crearFuegosArtificiales() {
+      const container = document.getElementById('fireworksContainer');
+      const f = document.createElement('div');
+      f.classList.add('firework');
+      f.style.left = Math.random() * 100 + '%';
+      f.style.background = `hsl(${Math.random() * 360}, 100%, 70%)`;
+      container.appendChild(f);
+      setTimeout(() => container.removeChild(f), 2200);
+    }
+
+    // Confeti flotante continuo
+    function crearConfeti() {
+      const container = document.getElementById('confettiContainer');
+      const c = document.createElement('div');
+      c.classList.add('confetti');
+      c.style.left = Math.random() * 100 + '%';
+      c.style.background = `hsl(${Math.random() * 360}, 100%, 60%)`;
+      container.appendChild(c);
+      setTimeout(() => container.removeChild(c), 5000);
+    }
+
+    // Lanzar cada cierto tiempo
+    setInterval(crearFuegosArtificiales, 800);
+    setInterval(crearConfeti, 150);
+  </script>
+
+</body>
+</html>
